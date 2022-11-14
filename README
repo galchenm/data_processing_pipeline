@@ -1,0 +1,13 @@
+python3 auto_creating_list_of_files_with_folder_structure_for_processing.py -i /gpfs/exfel/u/scratch/SPB/202201/p002770/cheetah/hdf5/ -l /gpfs/cfel/group/cxi/scratch/2020/EXFEL-2019-Schmidt-Mar-p002450/scratch/galchenm/scripts_for_work/data_processing_pipeline -p EuXFEL -fe cxi -b block_EuXFEL.lst
+
+python3 auto_creating_list_of_files_with_folder_structure_for_processing.py -i /gpfs/exfel/u/scratch/SPB/202201/p002770/cheetah/hdf5/ -l /gpfs/cfel/group/cxi/scratch/2020/EXFEL-2019-Schmidt-Mar-p002450/scratch/galchenm/scripts_for_work/data_processing_pipeline -p EuXFEL -fe cxi
+
+python3 auto_creating_list_of_files_with_folder_structure_for_processing.py -i /asap3/petra3/gpfs/p11/2022/data/11015490/processed/nexus-files -l /gpfs/cfel/group/cxi/scratch/2020/EXFEL-2019-Schmidt-Mar-p002450/scratch/galchenm/scripts_for_work/data_processing_pipeline -p data -fe nx5
+
+python3 auto_creating_list_of_files_with_folder_structure_for_processing.py -i /asap3/petra3/gpfs/p11/2022/data/11015490/processed/nexus-files -l /gpfs/cfel/group/cxi/scratch/2020/EXFEL-2019-Schmidt-Mar-p002450/scratch/galchenm/scripts_for_work/data_processing_pipeline/lists -p data -fe nx5
+
+python3 auto_creating_list_of_files_with_folder_structure_for_processing.py -i /asap3/petra3/gpfs/p11/2022/data/11014381/raw -l /gpfs/cfel/group/cxi/scratch/2020/EXFEL-2019-Schmidt-Mar-p002450/scratch/galchenm/scripts_for_work/data_processing_pipeline/lists -fe h5 -b block_p11.lst
+
+python3 auto_creating_list_of_files_with_folder_structure_for_processing.py -i /asap3/petra3/gpfs/p11/2022/data/11014381/raw -l /gpfs/cfel/group/cxi/scratch/2020/EXFEL-2019-Schmidt-Mar-p002450/scratch/galchenm/scripts_for_work/data_processing_pipeline/lists -fe h5
+
+

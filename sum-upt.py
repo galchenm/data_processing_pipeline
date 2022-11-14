@@ -25,7 +25,7 @@ def parse_cmdline_args():
         formatter_class=CustomFormatter)
     parser.add_argument('-i','--i', type=str, help="Path with files")
     parser.add_argument('-o','--o', type=str, help="The name of file for making mask")
-    parser.add_argument('-f','--f', type=str, help="The format of hdf5 files (cxi/h5)")
+    parser.add_argument('-f','--f', type=str, help="The format of hdf5 files (cxi/h5/nx5)")
     parser.add_argument('-pt','--pt', type=str, help="The pattern in names of hdf5 files (data, EuXFEL)")
     parser.add_argument('-s','--s', type=str, help="Single file")
     parser.add_argument('-n','--n', type=int, help="Num of patterns for the sum")
@@ -98,22 +98,26 @@ if __name__ == "__main__":
             if len(files) == 0:
                 files = glob.glob(os.path.join(args.i,'*.h5'))
                 if len(files) == 0:
-                    print(f'Check {args.i} - something went wrong. Carefully check format and filenames')
-                    correct = False
-                else:
-                    Sum_Int = sum_int(files, path_cxi, args.n)
+                    files = glob.glob(os.path.join(args.i,'*.nx5'))    
+                    if len(files) == 0:
+                        print(f'Check {args.i} - something went wrong. Carefully check format and filenames')
+                        correct = False
+                    else:
+                        Sum_Int = sum_int(files, path_cxi, args.n)
         if args.f is None and args.pt is not None:
             files = glob.glob(os.path.join(args.i,f'*{args.pt}*cxi'))
             if len(files) == 0:
                 files = glob.glob(os.path.join(args.i,f'*{args.pt}*h5'))
                 if len(files) == 0:
-                    print(f'Check {args.i} - something went wrong. Carefully check format and filenames')
-                    correct = False
-                else:
-                    Sum_Int = sum_int(files, path_cxi, args.n)
+                    files = glob.glob(os.path.join(args.i,f'*{args.pt}*nx5'))
+                    if len(files) == 0:
+                        print(f'Check {args.i} - something went wrong. Carefully check format and filenames')
+                        correct = False
+                    else:
+                        Sum_Int = sum_int(files, path_cxi, args.n)
                     
         if args.f is not None and  args.pt is None:
-            files = glob.glob(os.path.join(args.i,f'*{args.f }'))
+            files = glob.glob(os.path.join(args.i,f'*{args.f}'))
             if len(files) == 0:
                 print(f'Check {args.i} - something went wrong. Carefully check format and filenames')
                 correct = False
