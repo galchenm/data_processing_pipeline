@@ -4,7 +4,7 @@ python3 auto_creating_list_of_files_with_folder_structure_for_processing.py -i [
 
 2. Run the turbo-index script (https://www.desy.de/~twhite/crystfel/scripts/turbo-index-slurm) for processing your data by running it with following command line if you have one geometry file for all runs:
 
-python3 run_turbo_index.py [path_to_the_folder_for_creating_structure_for_further_processing] [path to the turbo-index script] [-f block_of_interest] [-r True (if you want to rerun indexing and pf with different parameters)]
+python3 run_turbo_index.py [path_to_the_folder_for_creating_structure_for_further_processing, raw processing results] [path to the folder with lists of files] [path to the turbo-index script] [-f block_of_interest] [-r True (if you want to rerun indexing and pf with different parameters)]
 
 3. Use this script for checking and merging streams. This script will also genereta several plots for evaluation such parameters as detector distance.
 

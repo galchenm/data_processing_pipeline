@@ -23,6 +23,9 @@ import glob
 import shutil
 import matplotlib.pyplot as plt
 
+import warnings
+warnings.filterwarnings("ignore")
+
 os.nice(0)
 
 class CustomFormatter(argparse.RawDescriptionHelpFormatter,
@@ -442,7 +445,7 @@ def compare_lists_with_streams(path_from, rerun, rerun_merge, skip, m_prefix, m_
     else:
         
         for file_lst in files_lst:
-            filename = os.path.basename(file_lst).replace('split-events-EV-','').replace('split-events-','')
+            filename = os.path.basename(file_lst).replace('split-events-EV-','').replace('split-events-','').replace('events-','')
 
             suffix = re.search(r'.lst\d+', filename).group()
             prefix = filename.replace(suffix,'')
@@ -503,6 +506,9 @@ def compare_lists_with_streams(path_from, rerun, rerun_merge, skip, m_prefix, m_
                     os.system(command)
     if success:
         print(f'All processed correctly in {os.path.basename(path_from)}')
+        merge_streams(path_from, rerun_merge, skip, m_prefix, m_suffix, output_path_for_prev_results, rerun_detector_shift)
+    elif not success and not rerun:
+        print(f'Not all processed correctly in {os.path.basename(path_from)}, but we still merge streams')
         merge_streams(path_from, rerun_merge, skip, m_prefix, m_suffix, output_path_for_prev_results, rerun_detector_shift)
     else:
         print(f'Check log file. Not all processed correctly in {os.path.basename(path_from)}')
