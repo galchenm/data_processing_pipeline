@@ -60,29 +60,7 @@ def prepare_blocks(blocks):
     
     return d
     
-def writing_to_lst(parameters):
-    filenameLST, dir_from, path_to_raw_processed, pattern, file_extension, excluded = parameters
-    if os.path.exists(dir_from):
-        files_of_interest = glob.glob(os.path.join(dir_from, f'*{file_extension}'))
-        
-        if len(files_of_interest) > 0:
-            if pattern is not None:
-                files_of_interest = [filename for filename in files_of_interest if (pattern in os.path.basename(filename))]
-            if excluded is not None:
-                files_of_interest = [filename for filename in files_of_interest if (excluded not in os.path.basename(filename))] 
-            files_of_interest.sort()
-            
-            files_lst = open(filenameLST, 'a+')
-            for f in files_of_interest:
-                files_lst.write(f)
-                files_lst.write("\n")
-            files_lst.close()
-            raw_processed_folder = os.path.join(path_to_raw_processed, os.path.basename(filenameLST).split('.')[0])
-            creating_folder_structure(raw_processed_folder)
-        else:
-            print(f'This folder {dir_from} is empty')
-    else:
-        print(f'Check {dir_from}')
+
 
 def creating_folder_structure(raw_processed_folder):
     
@@ -120,20 +98,67 @@ def creating_lists_for_blocks(parameters):
                     writing_to_lst([filenameLST, dir_from, path_to_raw_processed, pattern, file_extension, excluded])
     except KeyError:
         pass
+'''
+def writing_to_lst(parameters):
+    filenameLST, dir_from, path_to_raw_processed, pattern, file_extension, excluded = parameters
+    if os.path.exists(dir_from):
+        files_of_interest = glob.glob(os.path.join(dir_from, f'*{file_extension}'))
+        print(dir_from, len(files_of_interest))
+        #print(files_of_interest)
+        if len(files_of_interest) > 0:
+            if pattern is not None:
+                files_of_interest = [filename for filename in files_of_interest if (pattern in os.path.basename(filename))]
+            if excluded is not None:
+                files_of_interest = [filename for filename in files_of_interest if (excluded not in os.path.basename(filename))] 
+            files_of_interest.sort()
+            
+            files_lst = open(filenameLST, 'a+')
+            for f in files_of_interest:
+                files_lst.write(f)
+                files_lst.write("\n")
+            files_lst.close()
+            raw_processed_folder = os.path.join(path_to_raw_processed, os.path.basename(filenameLST).split('.')[0])
+            creating_folder_structure(raw_processed_folder)
+        else:
+            print(f'This folder {dir_from} is empty')
+    else:
+        print(f'Check {dir_from}')
+'''
 
+def writing_to_lst(parameters):
+    filenameLST, files_of_interest, path_to_raw_processed, pattern, file_extension, excluded = parameters
+    
+    #files_of_interest = glob.glob(os.path.join(dir_from, f'*{file_extension}'))
 
+    if len(files_of_interest) > 0:
+        if pattern is not None:
+            files_of_interest = [filename for filename in files_of_interest if (pattern in filename)]
+        if excluded is not None:
+            print(excluded)
+            files_of_interest = [filename for filename in files_of_interest if excluded not in filename] 
+        files_of_interest.sort()
+        
+        files_lst = open(filenameLST, 'a+')
+        for f in files_of_interest:
+            files_lst.write(f)
+            files_lst.write("\n")
+        files_lst.close()
+        raw_processed_folder = os.path.join(path_to_raw_processed, os.path.basename(filenameLST).split('.')[0])
+        creating_folder_structure(raw_processed_folder)
 
 def folder_to_list_of_files(parameters):
     path_to_lists, path_from, path_to_raw_processed, pattern, file_extension, excluded = parameters
     
-    for path, dirs, all_files in os.walk(path_from):
+    for dir_from, dirs, all_files in os.walk(path_from):
         
-        for di in dirs:
-            dir_from = os.path.join(path_from, di)
-            if os.path.exists(dir_from):
-                filenameLST = os.path.join(path_to_lists, f'{os.path.basename(di)}.lst')
-                writing_to_lst([filenameLST, dir_from, path_to_raw_processed, pattern, file_extension, excluded])
-
+        files_of_interest = glob.glob(os.path.join(dir_from, f'*{file_extension}'))
+        if len(files_of_interest)>0:
+            filenameLST = os.path.join(path_to_lists, dir_from[len(path_from)+1:].replace('/','_')+'.lst') #os.path.join(path_to_lists, f'{os.path.basename(di)}.lst')
+            #writing_to_lst_old([filenameLST, dir_from, path_to_raw_processed, pattern, file_extension, excluded])
+            writing_to_lst([filenameLST, files_of_interest, path_to_raw_processed, pattern, file_extension, excluded])
+        else:
+            print(f'This folder {dir_from} is empty')
+            
 @click.command(context_settings=dict(help_option_names=["-h", "--help"]))
 
 
